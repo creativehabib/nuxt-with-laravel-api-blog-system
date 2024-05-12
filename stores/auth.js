@@ -34,6 +34,23 @@ export const useAuthStore = defineStore('auth', {
             }
 
         },
+        async logout () {
+           const tokenStore = useTokenStore()
+            try{
+                const res  = await $fetch("http://nuxtapi.test/api/logout", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${tokenStore.getToken}`,
+                    }
+                });
+                tokenStore.removeToken();
+                console.log(res)
+            }catch (error){
+                throw error;
+            }
+
+        },
         commonSetter(data){
             const token = useTokenStore();
             token.setToken(data.token);

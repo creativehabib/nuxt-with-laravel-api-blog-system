@@ -1,11 +1,11 @@
 <script setup>
-
-definePageMeta({layout: false,});
+definePageMeta({
+  layout: false,
+  middleware: ['guest']
+})
 
 const auth = useAuthStore();
 const token = useTokenStore();
-
-
 
 const form = reactive({
   name: null,

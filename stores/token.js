@@ -16,7 +16,10 @@ export const useTokenStore = defineStore('token',{
             this.loggedIn = true;
         },
         removeToken(){
+            const auth = useAuthStore()
+            auth.$reset()
             this.$reset();
+            return navigateTo('/auth/login')
         }
     },
 

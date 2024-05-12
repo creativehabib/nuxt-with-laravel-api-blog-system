@@ -1,5 +1,7 @@
 <script setup>
-    const auth = useAuthStore();
+const auth = useAuthStore()
+definePageMeta({middleware: ['auth']})
+
 </script>
 <template>
   <div class="w-full h-screen p-4 text-center bg-white rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
