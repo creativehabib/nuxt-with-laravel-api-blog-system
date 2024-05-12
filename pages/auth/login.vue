@@ -1,12 +1,14 @@
 <script setup>
+
     definePageMeta({layout: false,});
 
     const auth = useAuthStore();
+    const token = useTokenStore();
 
 
 
     const form = reactive({
-        email: 'test@gmail.com',
+        email: 'test@example.com',
         password: 'password'
     });
     const errors = ref([]);
@@ -15,7 +17,7 @@
        try{
            await auth.login(form)
        }catch (error){
-        errors.value = error.data.errors;   
+        errors.value = error.data.errors;
        }
        
     }
@@ -29,6 +31,7 @@
                     <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Sign in to your account
                     </h1>
+                  {{ token.getStatus }}
                     <form class="space-y-4 md:space-y-6" @submit.prevent="handleSubmit">
                         <div>
                             <FormLabel for="email">Your Email</FormLabel>
@@ -56,6 +59,7 @@
                             Don’t have an account yet? <NuxtLink :to="{name: 'auth-register'}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up</NuxtLink>
                         </p>
                     </form>
+                  <ButtonPrimary @click="token.removeToken()">Remove Token</ButtonPrimary>
                 </div>
             </div>
         </div>

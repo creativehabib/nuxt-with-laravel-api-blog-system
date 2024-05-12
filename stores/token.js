@@ -1,17 +1,23 @@
-export const useTokenStore = defineStore('token', {
+export const useTokenStore = defineStore('token',{
 
-    state: () => ({ 
-        token: null, 
+    state: () => ({
+        token: null,
         loggedIn: false
-     }),
+    }),
+    persist: true,
 
     getters: {
-     
+        getToken: (state) => state.token,
+        getStatus: (state) => state.loggedIn
     },
     actions: {
         setToken(token){
             this.token = token;
-            loggedIn = true;
+            this.loggedIn = true;
+        },
+        removeToken(){
+            this.$reset();
         }
-    }
-  })
+    },
+
+})

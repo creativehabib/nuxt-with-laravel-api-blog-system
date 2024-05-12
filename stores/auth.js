@@ -1,23 +1,44 @@
 export const useAuthStore = defineStore('auth', {
 
-    state: () => ({ count: 0, name: 'Eduardo' }),
-
+    state: () => ({
+        user: {}
+    }),
+    persist: {
+        paths: ['user']
+    },
     getters: {
-     
+        getUser: (state) => state.user
     },
     actions: {
        async login (formData) {
-            const token = useTokenStore();
             try{
-                 const {data}  = await $fetch("http://localhost:8000/api/login", {
+                 const { data }  = await $fetch("http://nuxtapi.test/api/login", {
                      method: "POST",
                      body: { ... formData},
                  });
-                 token.setToken(data.token);
+                this.commonSetter(data)
             }catch (error){
              throw error;   
             }
             
-         }
+         },
+        async register (formData) {
+            try{
+                const { data }  = await $fetch("http://nuxtapi.test/api/register", {
+                    method: "POST",
+                    body: { ... formData},
+                });
+                this.commonSetter(data)
+            }catch (error){
+                throw error;
+            }
+
+        },
+        commonSetter(data){
+            const token = useTokenStore();
+            token.setToken(data.token);
+            this.user = data.user;
+            return navigateTo('/dashboard')
+        }
     },
   })
