@@ -7,8 +7,8 @@
     const auth = useAuthStore();
 
     const form = reactive({
-        email: 'test@example.com',
-        password: 'password'
+        email: null,
+        password: null
     });
     const errors = ref([]);
     const handleSubmit = async () => {
@@ -52,7 +52,12 @@
                             </div>
                             <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Forgot password?</a>
                         </div>
-                        <ButtonPrimary>Sign in</ButtonPrimary>
+                        <template v-if="auth.isLoading">
+                            <ButtonLoading>Loading...</ButtonLoading>                            
+                        </template>
+                        <template v-else>
+                            <ButtonPrimary>Sign in</ButtonPrimary>
+                        </template>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <NuxtLink :to="{name: 'auth-register'}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up</NuxtLink>
                         </p>

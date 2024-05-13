@@ -30,8 +30,8 @@ import { NuxtLink } from '#build/components';
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Sign up to your account
+                    <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Sign up to create account
                     </h1>
                     <form class="space-y-4 md:space-y-6" @submit.prevent="handleSubmit">
                         <div>
@@ -56,7 +56,12 @@ import { NuxtLink } from '#build/components';
                           <span v-if="errors.password_confirmation" class="text-red-700 text-sm">{{ errors.password_confirmation[0] }}</span>
                         </div>
 
-                      <ButtonPrimary>Sign up</ButtonPrimary>
+                        <template v-if="auth.isLoading">
+                            <ButtonLoading>Loading...</ButtonLoading>                            
+                        </template>
+                        <template v-else>
+                            <ButtonPrimary>Sign up</ButtonPrimary>
+                        </template>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <NuxtLink :to="{name: 'auth-login'}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Login</NuxtLink>
                         </p>

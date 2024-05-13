@@ -1,7 +1,8 @@
 export const useAuthStore = defineStore('auth', {
 
     state: () => ({
-        user: {}
+        user: {},
+        isLoading: false
     }),
     persist: {
         paths: ['user']
@@ -11,25 +12,29 @@ export const useAuthStore = defineStore('auth', {
     },
     actions: {
        async login (formData) {
+            this.isLoading = true
             try{
-                 const { data }  = await $fetch("http://nuxtapi.test/api/login", {
+                 const { data }  = await $fetch("http://localhost:8000/api/login", {
                      method: "POST",
                      body: { ... formData},
                  });
                 this.commonSetter(data)
             }catch (error){
+                this.isLoading = false;
              throw error;   
             }
             
          },
         async register (formData) {
+            this.isLoading = true
             try{
-                const { data }  = await $fetch("http://nuxtapi.test/api/register", {
+                const { data }  = await $fetch("http://localhost:8000/api/register", {
                     method: "POST",
                     body: { ... formData},
                 });
                 this.commonSetter(data)
             }catch (error){
+                this.isLoading = false
                 throw error;
             }
 
@@ -37,7 +42,7 @@ export const useAuthStore = defineStore('auth', {
         async logout () {
            const tokenStore = useTokenStore()
             try{
-                const res  = await $fetch("http://nuxtapi.test/api/logout", {
+                const res  = await $fetch("http://localhost:8000/api/logout", {
                     method: "POST",
                     headers: {
                         Accept: "application/json",
