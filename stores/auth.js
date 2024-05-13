@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('auth', {
        async login (formData) {
             this.isLoading = true
             try{
-                 const { data }  = await $fetch("http://localhost:8000/api/login", {
+                 const { data }  = await $fetch(`${baseURL}api/login`, {
                      method: "POST",
                      body: { ... formData},
                  });
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
         async register (formData) {
             this.isLoading = true
             try{
-                const { data }  = await $fetch("http://localhost:8000/api/register", {
+                const { data }  = await $fetch(`${baseURL}api/register`, {
                     method: "POST",
                     body: { ... formData},
                 });
@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', {
         async logout () {
            const tokenStore = useTokenStore()
             try{
-                const res  = await $fetch("http://localhost:8000/api/logout", {
+                const res  = await $fetch(`${baseURL}api/logout`, {
                     method: "POST",
                     headers: {
                         Accept: "application/json",
