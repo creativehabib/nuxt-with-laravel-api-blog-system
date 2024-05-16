@@ -1,8 +1,10 @@
+
+import { NuxtLink } from '#build/components';
 <template>
-   <footer class="bg-white dark:bg-gray-900">
+   <footer class="bg-white dark:bg-gray-900 absolute bottom-0">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6">
         <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://flowbite.com/" class="hover:underline">Ebdresults.com™</a>. All Rights Reserved.
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <NuxtLink to="/dashboard" class="hover:underline">Ebdresults.com™</NuxtLink>. All Rights Reserved.
             </span>
             <div class="flex mt-4 sm:justify-center sm:mt-0">
                 <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
