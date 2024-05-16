@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     ],
+    runtimeConfig: {
+      public: {
+        apiUrl: process.env.BASE_URI,
+      },
+    },
 
     imports:{
       dirs: ['./stores'],
@@ -18,7 +23,7 @@ export default defineNuxtConfig({
 
   app:{
     head: {
-      title: 'Nuxt Js CRUD',
+      titleTemplate: '%s | My Amazing Blog Website',
       meta: [
         {charset: 'utf-8'},
         {name: 'viewport',content: 'width-device-width, initial-scale=1'},
