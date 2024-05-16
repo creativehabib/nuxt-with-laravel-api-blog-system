@@ -8,4 +8,13 @@
 
 <script setup>
     const counter = useCounterStore();
+
+    useSeoMeta({
+      title: 'Home',
+      ogTitle: 'My Amazing Blog Website',
+      description: 'This is my amazing site, let me tell you all about it.',
+      ogDescription: 'This is my amazing site, let me tell you all about it.',
+      ogImage: 'https://example.com/image.png',
+      twitterCard: 'summary_large_image',
+    })
 </script>

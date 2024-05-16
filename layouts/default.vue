@@ -6,8 +6,8 @@
              <div class="rounded-lg mt-14">
                  <!-- Page Content -->
                  <slot/>
-                </div>
-                <Footer class="mt-4 right-0 w-full pl-60"/>
-            </div>
+                 <Footer class="mt-4"/>
+             </div>
+          </div>
         </div> 
 </template>

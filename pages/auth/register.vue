@@ -3,9 +3,15 @@ definePageMeta({
   layout: false,
   middleware: ['guest']
 })
-
+useSeoMeta({
+  title: 'Register',
+  ogTitle: 'My Amazing Site',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 const auth = useAuthStore();
-const token = useTokenStore();
 
 const form = reactive({
   name: null,
@@ -15,7 +21,6 @@ const form = reactive({
 });
 const errors = ref([]);
 const handleSubmit = async () => {
-
   try{
     await auth.register(form)
   }catch (error){
