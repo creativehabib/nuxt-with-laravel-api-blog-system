@@ -3,9 +3,6 @@ const auth = useAuthStore()
 definePageMeta({
   middleware: ['auth']
 })
-useHead({
-  title: "Dashboard | NUXT JS CRUD Project"
-})
 
 
 // const {pending, data: posts} = await useFetch('https://fakestoreapi.com/products');
@@ -19,9 +16,7 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-const { pending, data, error, execute, refresh } = await useFetch("https://fakestoreapi.com/products/",{
-  lazy: true
-});
+const { pending, data, error, execute, refresh } = await useFetch("https://fakestoreapi.com/products/");
 </script>
 <template>
 
@@ -44,7 +39,6 @@ const { pending, data, error, execute, refresh } = await useFetch("https://fakes
             </path>
           </svg>
         </div>
-
       </div>
       <div v-else>
         <section class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
@@ -72,8 +66,7 @@ const { pending, data, error, execute, refresh } = await useFetch("https://fakes
           </div>
         </div>
         </section>
+        
       </div>
-
   </div>
-
 </template>

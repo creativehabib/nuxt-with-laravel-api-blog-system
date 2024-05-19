@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  // runtimeConfig:{
+  //   API_URL: "http://127.0.0.1:8000",
+  //   public:{
+  //     API_URL: "http://127.0.0.1:8000",
+  //   }
+  // },
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   modules: [
@@ -9,8 +16,11 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
       public: {
-        apiUrl: process.env.BASE_URI,
+        // apiUrl: process.env.BASE_URI,
+          API_URL: "http://127.0.0.1:8000",
+
       },
+
     },
 
     imports:{
@@ -51,7 +61,7 @@ export default defineNuxtConfig({
         },
         {
           src: 'https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js',
-          // src: '~/assets/js/flowbite.min.js',
+          // src: '@/assets/js/flowbite.min.js',
           type: 'text/javascript',
           defer: true
         }
