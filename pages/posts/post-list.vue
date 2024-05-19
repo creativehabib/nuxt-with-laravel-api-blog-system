@@ -1,4 +1,11 @@
 <script setup>
+const auth = useAuthStore()
+definePageMeta({
+  middleware: ['auth']
+})
+
+const page = ref(1)
+
 useSeoMeta({
   title: 'All Post',
   ogTitle: 'My Amazing Blog Website',
@@ -7,6 +14,13 @@ useSeoMeta({
   ogImage: 'https://example.com/image.png',
   twitterCard: 'summary_large_image',
 })
+function refetch(pageNumber){
+  page.value = pageNumber
+  refresh()
+}
+const { pending, data: posts, error, refresh } = await useFetch(`${baseURL}api/posts?page=${page.value}`);
+
+
 </script>
 <template>
     <div class="flex justify-between bg-white px-4">
@@ -31,7 +45,7 @@ useSeoMeta({
                     </div>
                 </li>
             </ul>
-            <button type="button" class="font-semibold text-gray-500 dark:text-gray-400"><a href="#">Create</a></button>
+            <button type="button" class="font-semibold text-gray-500 dark:text-gray-400"><NuxtLink to="/posts/create">Create</NuxtLink></button>
         </div>
     
 
@@ -41,44 +55,44 @@ useSeoMeta({
                 <tr>
                     <th scope="col" class="px-6 py-3">Serial</th>
                     <th scope="col" class="px-6 py-3">Post Title</th>
+                    <th scope="col" class="px-6 py-3">Post Status</th>
                     <th scope="col" class="px-6 py-3">Category</th>
                     <th scope="col" class="px-6 py-3">Updated by</th>
                     <th scope="col" class="px-6 py-3 text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-            
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-3">1</th>
+            <tr v-if="pending" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              loading
+            </tr>
+            <tr v-else v-for="(post, index) in posts.data" :key="index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-3">{{ ++index }}</th>
                 <td class="px-6 py-3 flex items-center">
-                    <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D" alt="" class="w-10 h-10 rounded-md">
+                    <img :src="post.post_image" alt="" class="w-10 h-10 rounded-md">
                     <div class="ml-3">
-                        <div class="text-base font-semibold dark:text-gray-100">sdf</div>
-                        <div class="font-normal text-gray-500 dark:text-zinc-100/80">dsfs</div>
+                        <div class="text-base font-semibold dark:text-gray-100">{{ post.post_title}}</div>
+                        <div class="font-normal text-gray-500 dark:text-zinc-100/80">{{post.created_at}}</div>
                     </div>
                 </td>
-                <td class="px-6 py-3">dfs</td>
-                <td class="px-6 py-3">fdsf</td>
+                <td class="px-6 py-3">{{ post.post_status }}</td>
+                <td class="px-6 py-3">{{ post.post_category }}</td>
+                <td class="px-6 py-3">{{ post.updated_at }}</td>
                 <td class="px-6 py-3">
                     <form method="post" action="#">
                         <div class="text-center">
-                            <NuxtLink href="#" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-[#FF9119] rounded-lg hover:bg-[#FF9119]/80 focus:outline-none dark:bg-[#FF9119] dark:hover:bg-[#FF9119]/80">View</NuxtLink>
-                            <NuxtLink href="#" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 mx-1">Edit</NuxtLink>
-                            
-                            <button type="submit" onclick="return confirm('Are you sure delete it?');" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none dark:bg-red-600 dark:hover:bg-red-700">Delete</button>
+                            <NuxtLink :to="`/post/view?id=${post.id}`" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-[#FF9119] rounded-lg hover:bg-[#FF9119]/80 focus:outline-none dark:bg-[#FF9119] dark:hover:bg-[#FF9119]/80">View</NuxtLink>
+                            <NuxtLink :to="`/post/edit?id=${post.id}`" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 mx-1">Edit</NuxtLink>
+                            <button @click.prevent="deleteItem(post.id)" onclick="return confirm('Are you sure delete it?');" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none dark:bg-red-600 dark:hover:bg-red-700">Delete</button>
                         </div>
                     </form>
                 </td>
             </tr>
-            
-                <tr class="text-center">
-                    <td colspan="5" class="text-danger">No Data found</td>
-                </tr>
+
             
             </tbody>
         </table>
-        <div class="p-2">
-            
+        <div class="p-2">vxcv
+          <Pagination @change="refetch" :totalPages="posts?.total_pages" :currentPage="page" />
         </div>
     </div>
 </template>
